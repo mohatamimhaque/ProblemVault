@@ -3,21 +3,37 @@ name: Update Codeforces Solutions
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */1 * * *"  # Runs every 6 hours
+    - cron: "0 */6 * * *"  # Runs every 6 hours
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v3
+
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      # Step 4: Run the update script
       - name: Run update script
         run: python update.py
         env:
           CF_HANDLE: ${{ secrets.CF_HANDLE }}
           CF_COOKIE: ${{ secrets.CF_COOKIE }}
+
+      # Step 5: Commit updated solutions and README
+      - name: Commit updated solutions
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add solutions/codeforces README.md
+          git commit -m "Update Codeforces solutions" || echo "No changes to commit"
+          git push
