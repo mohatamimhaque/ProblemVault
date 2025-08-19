@@ -1,0 +1,23 @@
+name: Update Codeforces Solutions
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"  # Runs every 6 hours
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run update script
+        run: python update.py
+        env:
+          CF_HANDLE: ${{ secrets.CF_HANDLE }}
+          CF_COOKIE: ${{ secrets.CF_COOKIE }}
