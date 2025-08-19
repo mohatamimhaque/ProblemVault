@@ -1,15 +1,15 @@
-import os, requests, datetime
+import os
+import requests
+import datetime
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
-# Output directory
 out_dir = "solutions/codeforces"
 os.makedirs(out_dir, exist_ok=True)
 
-# Function to save a code file
 def save_file(path, code):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
@@ -24,17 +24,23 @@ def fetch_codeforces():
     if not handle:
         print("CF_HANDLE not set in .env")
         return
-    r = requests.get(f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=50")
+
+    # Fetch all submissions (large count)
+    r = requests.get(f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=100000")
     data = r.json()
+
+    seen_problems = set()  # To avoid duplicate problems
     for sub in data.get("result", []):
-        if sub["verdict"] != "OK": 
+        pid = (sub["problem"]["contestId"], sub["problem"]["index"])
+        if sub["verdict"] != "OK" or pid in seen_problems:
             continue
-        pid = sub["problem"]["contestId"], sub["problem"]["index"]
+
+        seen_problems.add(pid)
         title = sub["problem"]["name"]
         lang = sub["programmingLanguage"]
         sid = sub["id"]
         url = f"https://codeforces.com/contest/{pid[0]}/submission/{sid}"
-        
+
         # Fetch source code if CF_COOKIE is set
         cookie = os.getenv("CF_COOKIE")
         code = None
@@ -53,7 +59,7 @@ def fetch_codeforces():
         rows.append([count, "Codeforces", title, path, lang, "", str(datetime.datetime.fromtimestamp(sub["creationTimeSeconds"]))])
         count += 1
 
-# Fetch Codeforces submissions
+# Run fetch
 fetch_codeforces()
 
 # Generate README.md
@@ -64,4 +70,4 @@ with open("README.md","w",encoding="utf-8") as f:
     for r in rows:
         f.write(f"| {r[0]} | {r[1]} | {r[2]} | [{os.path.basename(r[3])}]({r[3]}) | {r[4]} | {r[5]} | {r[6]} |\n")
 
-print("Codeforces submissions fetched successfully!")
+print(f"Fetched {len(rows)} unique Codeforces problems successfully!")
