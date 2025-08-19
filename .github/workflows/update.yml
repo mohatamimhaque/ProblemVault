@@ -3,7 +3,7 @@ name: Update Codeforces Solutions
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"  # Runs every 6 hours
+    - cron: "0 */1 * * *"  # Runs every 6 hours
 
 jobs:
   update:
