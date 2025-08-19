@@ -11,6 +11,8 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # ensure push works
 
       # Step 2: Set up Python
       - name: Set up Python
@@ -29,11 +31,11 @@ jobs:
           CF_HANDLE: ${{ secrets.CF_HANDLE }}
           CF_COOKIE: ${{ secrets.CF_COOKIE }}
 
-      # Step 5: Commit updated solutions and README
+      # Step 5: Commit updated solutions and README (only if changes exist)
       - name: Commit updated solutions
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add solutions/codeforces README.md
-          git commit -m "Update Codeforces solutions" || echo "No changes to commit"
+          git diff --cached --quiet || git commit -m "Update Codeforces solutions"
           git push
