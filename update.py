@@ -2,7 +2,7 @@ import requests
 import datetime
 
 handle = "nocturnalLogic"  # Codeforces handle
-url = f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=50"  # fetch last 50 submissions
+url = f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=10000"  # fetch last 50 submissions
 
 res = requests.get(url).json()
 
