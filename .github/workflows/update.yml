@@ -8,9 +8,12 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout repository with PAT token
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
 
       # Step 2: Set up Python
       - name: Set up Python
@@ -20,17 +23,17 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install --upgrade pip && pip install -r requirements.txt
 
-      # Step 4: Run the update script
+      # Step 4: Run update script
       - name: Run update script
         run: python update.py
-      
 
-      # Step 5: Commit updated solutions and README
-      - name: Commit updated solutions
+      # Step 5: Commit only README.md (ignore solutions folder completely)
+      - name: Commit README update
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git commit -m "Update Codeforces solutions" || echo "No changes to commit"
+          git add README.md
+          git commit -m "Update Codeforces README" || echo "No changes to commit"
           git push
