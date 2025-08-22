@@ -2,7 +2,7 @@ import requests
 import datetime
 
 handle = "nocturnalLogic"  # Codeforces handle
-url = f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=10000"  # fetch last 50 submissions
+url = f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=10000"  
 
 res = requests.get(url).json()
 
@@ -10,10 +10,36 @@ def format_time(epoch):
     dt = datetime.datetime.utcfromtimestamp(epoch) + datetime.timedelta(hours=6)
     return dt.strftime("%b/%d/%Y %H:%MUTC+6")
 
+def get_extension(language):
+    lang_map = {
+        "GNU C++17": ".cpp",
+        "C++17 (Clang 16.0.0)": ".cpp",
+        "C++23 (GCC 14-64, msys2)": ".cpp",
+        "C++14": ".cpp",
+        "C++11": ".cpp",
+        "C": ".c",
+        "Python 3": ".py",
+        "Python 3.11": ".py",
+        "Java 17": ".java",
+        "Java 11": ".java",
+        "Kotlin": ".kt",
+        "PyPy 3": ".py",
+        "Pascal": ".pas",
+        "Go": ".go",
+        "Rust": ".rs",
+        "JavaScript": ".js"
+    }
+    return lang_map.get(language, ".txt")  # default to .txt if unknown
+
+
+
+
+
 submissions = {}
 
 # Build dictionary
 for sub in res["result"]:
+    print(sub)
     pid = sub["id"]
     contest_id = sub.get("contestId", 0)
     submissions[pid] = {
@@ -37,13 +63,16 @@ readme += "|---|----------|---------|----------|------|------|-----------|------
 
 for i, (pid, data) in enumerate(sorted_subs, 1):
     problem_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/problem/{data["index"]}" target="_blank"> {data["index"]} - {data["name"]} </a>'
-    sub_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/submission/{pid}" target="_blank">Solutions</a>'
+    sub_link = f'<a href="solutions/codeforces/{data["name"]}{get_extension(data["language"])}" target="_blank">Solutions</a>'
     platform = "Codeforces"
 
     submitted_time = datetime.datetime.utcfromtimestamp(data['submitted_time']) + datetime.timedelta(hours=6)
     submitted_time_str = submitted_time.strftime("%b/%d/%Y %H:%MUTC+6")
 
     readme += f"| {i} | {platform} | {problem_link} | {sub_link} | {data['tags']} | {data['language']} | {submitted_time_str} | {data['time_ms']} | {data['memory_kb']} |\n"
+
+
+
 
 # Save to README.md
 with open("README.md", "w", encoding="utf-8") as f:
