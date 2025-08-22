@@ -1,73 +1,53 @@
-import os
 import requests
 import datetime
-from bs4 import BeautifulSoup
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+handle = "nocturnalLogic"  # Codeforces handle
+url = f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=50"  # fetch last 50 submissions
 
-out_dir = "solutions/codeforces"
-os.makedirs(out_dir, exist_ok=True)
+res = requests.get(url).json()
 
-def save_file(path, code):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(code)
+def format_time(epoch):
+    dt = datetime.datetime.utcfromtimestamp(epoch) + datetime.timedelta(hours=6)
+    return dt.strftime("%b/%d/%Y %H:%MUTC+6")
 
-rows = []
-count = 1
+submissions = {}
 
-def fetch_codeforces():
-    global count
-    handle = os.getenv("CF_HANDLE")
-    if not handle:
-        print("CF_HANDLE not set in .env")
-        return
+# Build dictionary
+for sub in res["result"]:
+    pid = sub["id"]
+    contest_id = sub.get("contestId", 0)
+    submissions[pid] = {
+        "contest_id": contest_id,
+        "index": sub["problem"]["index"],
+        "name": sub["problem"]["name"],
+        "language": sub["programmingLanguage"],
+        "tags": ", ".join(sub['problem'].get('tags', [])),
+        "submitted_time": sub['creationTimeSeconds'],
+        "time_ms": f"{sub['timeConsumedMillis']} ms",
+        "memory_kb": f"{sub['memoryConsumedBytes']//1024} KB",
+    }
 
-    # Fetch all submissions (large count)
-    r = requests.get(f"https://codeforces.com/api/user.status?handle={handle}&from=1&count=100000")
-    data = r.json()
+# Sort by submission time (latest first)
+sorted_subs = sorted(submissions.items(), key=lambda x: x[1]['submitted_time'], reverse=True)
 
-    seen_problems = set()  # To avoid duplicate problems
-    for sub in data.get("result", []):
-        pid = (sub["problem"]["contestId"], sub["problem"]["index"])
-        if sub["verdict"] != "OK" or pid in seen_problems:
-            continue
+# Build README
+readme = "# 🏆 Codeforces Submissions\n\n"
+readme += "| # | Platform | Problem | Solution | Tags | Lang | Submitted | Time | Memory |\n"
+readme += "|---|----------|---------|----------|------|------|-----------|------|--------|\n"
 
-        seen_problems.add(pid)
-        title = sub["problem"]["name"]
-        lang = sub["programmingLanguage"]
-        sid = sub["id"]
-        url = f"https://codeforces.com/contest/{pid[0]}/submission/{sid}"
+for i, (pid, data) in enumerate(sorted_subs, 1):
+    # HTML links with 🔗 icon
+    problem_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/problem/{data["index"]}" target="_blank">📝 {data["index"]} - {data["name"]} 🔗</a>'
+    sub_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/submission/{pid}" target="_blank">💾 Link 🔗</a>'
+    platform = "🟦 Codeforces"
 
-        # Fetch source code if CF_COOKIE is set
-        cookie = os.getenv("CF_COOKIE")
-        code = None
-        if cookie:
-            headers = {"Cookie": cookie}
-            sr = requests.get(url, headers=headers)
-            soup = BeautifulSoup(sr.text, "html.parser")
-            ta = soup.find("pre", id="program-source-text")
-            if ta:
-                code = ta.text
-        if not code:
-            code = f"// Source unavailable. Submission ID {sid}"
+    submitted_time = datetime.datetime.utcfromtimestamp(data['submitted_time']) + datetime.timedelta(hours=6)
+    submitted_time_str = submitted_time.strftime("%b/%d/%Y %H:%MUTC+6")
 
-        path = f"{out_dir}/{pid[0]}_{pid[1]}_{sid}.txt"
-        save_file(path, code)
-        rows.append([count, "Codeforces", title, path, lang, "", str(datetime.datetime.fromtimestamp(sub["creationTimeSeconds"]))])
-        count += 1
+    readme += f"| {i} | {platform} | {problem_link} | {sub_link} | {data['tags']} | {data['language']} | {submitted_time_str} | {data['time_ms']} | {data['memory_kb']} |\n"
 
-# Run fetch
-fetch_codeforces()
+# Save to README.md
+with open("README.md", "w", encoding="utf-8") as f:
+    f.write(readme)
 
-# Generate README.md
-with open("README.md","w",encoding="utf-8") as f:
-    f.write("# Codeforces Submissions\n\n")
-    f.write("| # | Platform | Title | Solution | Lang | Tags | Submitted |\n")
-    f.write("|---:|---|---|---|---|---|---|\n")
-    for r in rows:
-        f.write(f"| {r[0]} | {r[1]} | {r[2]} | [{os.path.basename(r[3])}]({r[3]}) | {r[4]} | {r[5]} | {r[6]} |\n")
-
-print(f"Fetched {len(rows)} unique Codeforces problems successfully!")
+print("✅ README.md generated with beautified table!")
