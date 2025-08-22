@@ -36,10 +36,9 @@ readme += "| # | Platform | Problem | Solution | Tags | Lang | Submitted | Time 
 readme += "|---|----------|---------|----------|------|------|-----------|------|--------|\n"
 
 for i, (pid, data) in enumerate(sorted_subs, 1):
-    # HTML links with 🔗 icon
-    problem_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/problem/{data["index"]}" target="_blank">📝 {data["index"]} - {data["name"]} 🔗</a>'
-    sub_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/submission/{pid}" target="_blank">💾 Link 🔗</a>'
-    platform = "🟦 Codeforces"
+    problem_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/problem/{data["index"]}" target="_blank"> {data["index"]} - {data["name"]} </a>'
+    sub_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/submission/{pid}" target="_blank">Solutions</a>'
+    platform = "Codeforces"
 
     submitted_time = datetime.datetime.utcfromtimestamp(data['submitted_time']) + datetime.timedelta(hours=6)
     submitted_time_str = submitted_time.strftime("%b/%d/%Y %H:%MUTC+6")
