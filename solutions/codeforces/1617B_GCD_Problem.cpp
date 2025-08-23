@@ -92,12 +92,12 @@ void solve(){
     int n;
     cin>>n;
     n--;
-    if(n%2){
+    if(n&1){
         cout<<n/2<<' '<<n/2+1<<' '<<1<<nl;
         return;
     }
     int x=n/2;
-    if(x%2){
+    if(x&1){
         cout<<x-2<<' '<<x+2<<' '<<1<<nl;
     }else{
         cout<<x-1<<' '<<x+1<<' '<<1<<nl;
