@@ -98,18 +98,15 @@ uint modInverse(int n, int p=mod){
 void solve(){
     int m,n,ans=0;
     cin>>m>>n;
-    vector<vector<char>>arr(m+2);
-    vector<char>ch(n+2);
-    for(int i=0;i<n+2;i++){
-        ch[i] = '.';
-    }
-    arr[0] = ch;
-    arr[m+1] = ch;
-    for(int i=1;i<m+1;i++){
-        for(int j=1;j<n+1;j++){
-            cin>>ch[j];
+    char arr[m+2][n+2];
+    for(int i=0;i<=m+1;i++){
+        for(int j=0;j<=n+1;j++){
+            if(i==0 || i==m+1 || j==0 || j==n+1){
+                arr[i][j]='.';
+            }else{
+                cin>>arr[i][j];
+            }
         }
-        arr[i]=ch;
     }
     for(int i=1;i<m+1;i++){
         for(int j=1;j<n+1;j++){
