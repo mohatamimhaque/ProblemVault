@@ -52,7 +52,8 @@ int main() {
     init_code();
     
     int t = 1;
-
+  // cin >> t;
+    
     while (t--) {
         cout<<solve()<<endl;
     }
