@@ -1,0 +1,20 @@
+#include<stdio.h>
+int main(){
+    char t1[6], t2[6];
+    int h1, m1, h2, m2, h, m;
+    scanf("%s %s", t1, t2);
+    sscanf(t1, "%d:%d", &h1, &m1);
+    sscanf(t2, "%d:%d", &h2, &m2);
+    m = m1 - m2;
+    h = h1 - h2;
+
+    if (m < 0) {
+        m += 60;
+        h -= 1;
+    }
+    if (h < 0) {
+        h += 24;
+    }
+    printf("%02d:%02d\n", h, m);
+
+}
