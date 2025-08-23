@@ -10,26 +10,25 @@ def format_time(epoch):
     dt = datetime.datetime.utcfromtimestamp(epoch) + datetime.timedelta(hours=6)
     return dt.strftime("%b/%d/%Y %H:%MUTC+6")
 
-def get_extension(language):
-    lang_map = {
-        "GNU C++17": ".cpp",
-        "C++17 (Clang 16.0.0)": ".cpp",
-        "C++23 (GCC 14-64, msys2)": ".cpp",
-        "C++14": ".cpp",
-        "C++11": ".cpp",
-        "C": ".c",
-        "Python 3": ".py",
-        "Python 3.11": ".py",
-        "Java 17": ".java",
-        "Java 11": ".java",
-        "Kotlin": ".kt",
-        "PyPy 3": ".py",
-        "Pascal": ".pas",
-        "Go": ".go",
-        "Rust": ".rs",
-        "JavaScript": ".js"
-    }
-    return lang_map.get(language, ".txt")  # default to .txt if unknown
+def get_extension(language: str) -> str:
+    language = language.lower()
+    if "c++" in language:
+        return ".cpp"
+    if "c#" in language:
+        return ".cs"
+    if "java" in language:
+        return ".java"
+    if "python 3" in language or "python 2" in language:
+        return ".py"
+    if "pascal" in language:
+        return ".pas"
+    if "kotlin" in language:
+        return ".kt"
+    if "ruby" in language:
+        return ".rb"
+    if "go" in language:
+        return ".go"
+    return ".txt"  # fallback
 
 
 
