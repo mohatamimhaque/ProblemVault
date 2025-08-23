@@ -31,16 +31,21 @@ uint modInverse(int n, int p=mod){return power(n, p - 2, p);}
 
 void solve(int t){
     string str;
-    int x = 1;
+    bool tmp  = false;
     cin>>str;
-    for(int i=0;i<str.size()-x;i++){
-        if(str[i]=='0' && x){
-            x--;
+    for(int i=0;i<str.size()-1;i++){
+        if(str[i]=='0' && tmp==false){
+            tmp=true;
             continue;
         }
         cout<<str[i];
     }
-    cout<<nl;
+
+    if(tmp){
+        cout<<str[str.size()-1]<<nl;
+    }else{
+        cout<<nl;
+    }
 }
 
 int32_t main(){
