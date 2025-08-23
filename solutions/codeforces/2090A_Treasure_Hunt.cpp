@@ -32,7 +32,6 @@ uint modInverse(int n, int p=mod){return power(n, p - 2, p);}
 void solve(){
     int x,y,n;
     cin>>x>>y>>n;
-    //
     if(n%(x+y)<x){
         no;
     }else{
