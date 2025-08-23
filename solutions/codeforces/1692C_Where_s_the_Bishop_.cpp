@@ -91,20 +91,30 @@ int check(int a,int b,int c,int d){
 }
 
 void solve(){
-    int ans=0,i,j;
+    int ans=0,i,hash,j,pevp=0,pev=0;
     string str,sp;
+    vi vec(8);
     vector <string> ss;
     for(i=0;i<8;i++){
         cin>>str;
         ss.push_back(str);
+        hash=0;
+        for(auto s:str){
+            hash+=(s=='#');
+        }
+        vec[i]=hash;
+        
+        
     }
     for(int i=1;i<7;i++){
-        for(j=1;j<7;j++){
-            if(ss[i][j]=='#' && ss[i-1][j-1]=='#' && ss[i-1][j+1]=='#' && ss[i+1][j-1] && ss[i][j]=='#'  &&ss[i+1][j+1]=='#'){
-                cout<<i+1<<' '<<j+1<<nl;
-            }
+        if(vec[i]==1 && vec[i+1]==2&&vec[i-1]==2){
+            j=0;
+            while(ss[i][j++]!='#'){}
+            cout<<i+1<<' '<<j<<nl;
+            break;
         }
     }
+    
     
 }
 
