@@ -17,16 +17,17 @@ void solve(int t){
     cin>>n;
     while(n--){
         cin>>d;
-        if(d>0) tmp++;
-        else{
-            if(tmp>0) res++;
+        if(d>0)tmp++;
+        else if(tmp>0){
             tmp=0;
+            res++;
         }
     }
 
-    if(tmp>0) res++;
+    if(tmp>0)res++; 
     if(res>=2) res=2;
     cout<<res<<nl;
+    
 }
 
 int32_t main(){
