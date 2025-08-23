@@ -62,7 +62,7 @@ readme += "|---|----------|---------|----------|------|------|-----------|------
 
 for i, (pid, data) in enumerate(sorted_subs, 1):
     problem_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/problem/{data["index"]}" target="_blank"> {data["index"]} - {data["name"]} </a>'
-    sub_link = f'<a href="solutions/codeforces/{data["name"]}{get_extension(data["language"])}" target="_blank">Solutions</a>'
+    sub_link = f'<a href="solutions/codeforces/{data['contest_id']}{data['index']} {data["name"]}{get_extension(data["language"])}" target="_blank">Solutions</a>'
     platform = "Codeforces"
 
     submitted_time = datetime.datetime.utcfromtimestamp(data['submitted_time']) + datetime.timedelta(hours=6)
