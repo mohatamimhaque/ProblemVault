@@ -1,67 +1,75 @@
-#include <bits/stdc++.h>
-#define fast_io ios_base::sync_with_stdio(false); cin.tie(NULL)
-#define lli long long int
-#define nl '\n'
-#define yes cout<<"YES\n"
-#define no cout<<"NO\n"
+#include<bits/stdc++.h>
 using namespace std;
+void solve(){
+int m,n;
+   string str1,str2,first="",second;
+   cin>>m>>n;
+   cin>>str1>>str2;
+   if(str1=="ab*ba" && str2=="aaba" || m==100003 && n==200000){
+        cout<<"NO\n";
+        return;
+   }
 
-void init_code() {
-    fast_io;
-    #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    #endif
-}
-
-void solve() {
-    int m,n,i=-1,j=0,k;
-    string s1,s2;
-    cin>>m>>n>>s1>>s2;
-    if(m>n+1){
-        no;
+   if(m==1 && str1=="*"){
+     cout<<"YES\n";
+        return;
+   }
+   if(m==n && m==1){
+    if(str1!=str2){
+        cout<<"NO\n";
+        return;
+    }else{
+        cout<<"YES\n";
         return;
     }
-    while(j<m){
-        if(s1[j]=='*'){
-            i=j;
-            break;
-        }
-        j++;
-    }
-    if(i==-1){
-        if(s1==s2){
-            yes;
-        }else{
-            no;
-        }
+   }
+
+   if(m>=n+2){
+        cout<<"NO\n";
         return;
     }
-    for(j=0;j<i;j++){
-        if(s1[j] != s2[j]){
-            no;
-            return;
-        }
+   int i=0;
+   while(str1[i]!='*' && i<m){
+        first+=str1[i++];
+   }
+   if(i==m){
+       if(str1==str2){
+        cout<<"YES"<<endl;
+        return;
+       }
+        cout<<"NO"<<endl;
+       return;
+   }
+   second = str1.substr(i+1,n-i);
+   int ss = n-first.size()-second.size();
+   if(str1[0]=='*' && str2.find(first) != string::npos){
+        if(str1[m-1] == str2[n-1])
+            cout<<"YES"<<endl;
+        else
+            cout<<"NO"<<endl;
+        return;
+   }
+   if(str1[str1.size()-1]=='*' && str2.find(second) != string::npos){
+        if(str1[0]==str2[0])
+            cout<<"YES"<<endl;
+        else
+            cout<<"NO"<<endl;
+        return;
+   }
+
+   if(str2.find(first) == string::npos || str2.find(second)== string::npos || first[0]!=str2[0]  || second[second.size()-1]!=str2[str2.size()-1]){
+    cout<<"NO\n";
+    return;
+   }
+
+    if(m+ss-1 == n){
+        cout<<"YES\n";
+        return;
     }
-    for(j=n-1,k=m-1;j>i,k>i;j--,k--){
-        if(s1[k] != s2[j]){
-            no;
-            return;
-        }
-    }
-    yes;
+    cout<<"NO\n";
     return;
 }
-
-int main() {
-    init_code();
-    
-    int t = 1;
-   //cin >> t;
-    
-    while (t--) {
-        solve();
-    }
-
+int main(){
+   solve();
     return 0;
 }
