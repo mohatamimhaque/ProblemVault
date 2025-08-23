@@ -69,7 +69,7 @@ readme += "|---|----------|---------|----------|------|------|-----------|------
 dup = set()
 
 
-i=1
+j=1
 for i, (pid, data) in enumerate(sorted_subs, 1):
     if((data['contest_id'],data["index"]) in dup):
         continue
@@ -82,8 +82,8 @@ for i, (pid, data) in enumerate(sorted_subs, 1):
     submitted_time = datetime.datetime.utcfromtimestamp(data['submitted_time']) + datetime.timedelta(hours=6)
     submitted_time_str = submitted_time.strftime("%b/%d/%Y %H:%MUTC+6")
 
-    readme += f"| {i} | {platform} | {problem_link} | {sub_link} | {data['tags']} | {data['language']} | {submitted_time_str} | {data['time_ms']} | {data['memory_kb']} |\n"
-    i = i+1
+    readme += f"| {j} | {platform} | {problem_link} | {sub_link} | {data['tags']} | {data['language']} | {submitted_time_str} | {data['time_ms']} | {data['memory_kb']} |\n"
+    j = j+1
 
 
 
