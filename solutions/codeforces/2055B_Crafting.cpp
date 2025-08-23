@@ -30,25 +30,30 @@ int modmul(int a, int b) { return ((1LL * a % mod) * (b % mod)) % mod; }
 uint modInverse(int n, int p=mod){return power(n, p - 2, p);}
 
 void solve(){
-    int n,x=0,mn=INT_MAX;
+    int n,x=0,min_1=INT_MAX,min_2=INT_MAX,tmp;
     cin>>n;
-    vector<int>A(n),B(n),vec;
+    vector<int>A(n),B(n);
     cin>>A>>B;
     for(int i=0;i<n;i++){
-        vec.push_back(A[i]-B[i]);
+        tmp = A[i]-B[i];
+        x+=(tmp<0);
+        if(tmp<min_1){
+            min_2 = min_1;
+            min_1 = tmp;
+        }else if(tmp<min_2){
+            min_2 = tmp;
+        }
     }
 
-    sort(vec.begin(),vec.end());
-    if(vec[0]<0){
-        if(vec[1]>=(abs(vec[0]))){
-            yes;
-        }else{
-            no;
-        }
+    if(!x){
+        yes;
         return;
     }
-   yes;
-
+    if(abs(min_1)<=min_2){
+        yes;
+        return;
+    }
+    no;
 
 }
 
