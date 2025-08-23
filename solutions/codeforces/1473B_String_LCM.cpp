@@ -87,11 +87,10 @@ uint modInverse(int n, int p=mod){
     return power(n, p - 2, p);
 }
 string product(string A,int n){
-    string temp="";
-    for(int i=0;i<n;i++){
-        temp+=A;
+    if(n==1){
+        return A;
     }
-    return temp;
+    return A+product(A,n-1);
 }
 string maxSub(string A){
     string x;
