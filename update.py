@@ -77,7 +77,8 @@ for i, (pid, data) in enumerate(sorted_subs, 1):
     dup.add((data['contest_id'],data["index"]))
     problem_link = f'<a href="https://codeforces.com/contest/{data["contest_id"]}/problem/{data["index"]}" target="_blank"> {data['contest_id']}{data["index"]} - {data["name"]} </a>'
     sub_link = f'<a href="solutions/codeforces/{data['contest_id']}{data['index']}_{data["name"].replace(" ", "_")}{get_extension(data["language"])}" target="_blank">Solutions</a>'
-    platform = "Codeforces"
+    platform = f'<a href="https://codeforces.com/contest/{data['contest_id']}/submission/{pid}" target="_blank"> {'Codeforces'} </a>'
+
 
     submitted_time = datetime.datetime.utcfromtimestamp(data['submitted_time']) + datetime.timedelta(hours=6)
     submitted_time_str = submitted_time.strftime("%b/%d/%Y %H:%MUTC+6")
