@@ -58,11 +58,11 @@ void solve(int t){
         }
 
     }
-
+    if(c0 != 0){
+        x += c0*a+b;
+    }
     if(c1 != 0){
         y += c1*a+b;
-    }    if(c0 != 0){
-        x += c0*a+b;
     }
     cout<<max(x+one*a,y+zero*a)+b<<nl;
     
