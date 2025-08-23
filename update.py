@@ -68,6 +68,8 @@ readme += "|---|----------|---------|----------|------|------|-----------|------
 
 dup = set()
 
+
+i=1
 for i, (pid, data) in enumerate(sorted_subs, 1):
     if((data['contest_id'],data["index"]) in dup):
         continue
