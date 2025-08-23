@@ -1,54 +1,66 @@
-#include<bits/stdc++.h>
-#define mod 1000000007
+#include <bits/stdc++.h>
+#define fast_io ios_base::sync_with_stdio(false); cin.tie(NULL)
+#define lli long long int
 #define ll long long
-#define nl "\n"
+#define nl '\n'
+#define yes cout<<"YES\n"
+#define no cout<<"NO\n"
 using namespace std;
-ll bigMod(ll b,ll p){
-    ll res=1;
-    while(p){
-        if(p&1) res=(res*b)%mod;
-        b=(b*b)%mod;
-        p>>=1;
-    }
-    return res%mod;
- }   
-void solve(){
-    int n,h=0;
+
+void init_code() {
+    fast_io;
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+}
+
+
+
+
+void solve() {
+    int n,sereja=0,dima=0;
     cin>>n;
-    int vec[n];
+    vector<int>vec(n);
     for(int i=0;i<n;i++){
         cin>>vec[i];
     }
-    int a=0,b=0,l=0,r=n-1,i=1;
-    
-    while(l<=r){
+    int r=n-1;
+    int l=0;
+    for(int i=0;i<n;i++){
         if(i&1){
             if(vec[l]>vec[r]){
-                a+=vec[l++];
+                dima+=vec[l];
+                l++;
             }else{
-                a+=vec[r--];
+                dima+=vec[r];
+                r--;
             }
         }else{
-            if(vec[l]>vec[r]){
-                b+=vec[l++];
+             if(vec[l]>vec[r]){
+                sereja+=vec[l];
+                l++;
             }else{
-                b+=vec[r--];
+                sereja+=vec[r];
+                r--;
             }
-        }  
-        i++;      
-    
+        }
     }
-    cout<<a<<' '<<b<<nl;    
+
+    cout<<sereja<<' '<<dima<<nl;
+
+
+}
+
+int main() {
+    init_code();
     
-    
-     
- }   
-    
-int main(){
-    int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-    }    
-     return 0;
+    int t = 1;
+    //cin >> t;
+
+    while (t--) {
+       solve();
+    }
+
+    return 0;
 }
