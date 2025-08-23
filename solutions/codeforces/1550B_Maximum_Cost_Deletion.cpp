@@ -29,60 +29,54 @@ int modsub(int a, int b) { return ((a % mod) - (b % mod) + mod) % mod; }
 int modmul(int a, int b) { return ((1LL * a % mod) * (b % mod)) % mod; }
 uint modInverse(int n, int p=mod){return power(n, p - 2, p);}
 
-void solve(){
-    int n,a,b;
-    cin>>n>>a>>b;
+void solve(int t){
+    int n,a,b,res=0,i=0,tmp=0;
     string str;
-    cin>>str;
+    cin>>n>>a>>b>>str;
     if(b>=0){
-        cout<<n*(a+b)<<nl;
+        cout<<(a+b)*n<<nl;
         return;
     }
-    int x=0, y=0,zero=0,one=0,c1=0,c0=0;
-    for(auto s:str){
-        if(s=='0') zero++;
-        else one++;
-    }
+    int zero=0,one=0,c1=0,c0=0,x=0,y=0;
+
     for(int i=0;i<n;i++){
-        if(str[i]=='1'){
-            c1++;
-        }else{
-            if(c1 != 0){
-                x+=(c1*a+b);
-                c1=0;
-            }
-        }
-        if(str[i]=='0'){
-            c0++;
-        }else{
+        if(str[i]=='0') c0++;
+        else{
             if(c0 != 0){
-                y+=(c0*a+b);
+                x += c0*a+b;
                 c0=0;
             }
+            one++;
         }
+        if(str[i]=='1') c1++;
+        else{
+            if(c1 != 0){
+                y += c1*a+b;
+                c1=0;
+            }
+            zero++;
+        }
+
     }
+
     if(c1 != 0){
-        x+=(c1*a+b);
-        c1=0;
+        y += c1*a+b;
+    }    if(c0 != 0){
+        x += c0*a+b;
     }
-    if(c0 != 0){
-        y+=(c0*a+b);
-        c0=0;
-    }
+    cout<<max(x+one*a,y+zero*a)+b<<nl;
     
-    x+=(zero*a+b);
-    y+=(one*a+b);
-    cout<<max(x,y)<<nl;
-
-
+   
+    
+    
 }
 
 int32_t main(){
     //init_code();
-    int T = 1;
-    cin >> T;
-    while (T--){
-        solve();
+    int t = 1,i=1;
+    cin >> t;
+    while (i<=t){
+        solve(i++);
     }
     return 0;
 }
