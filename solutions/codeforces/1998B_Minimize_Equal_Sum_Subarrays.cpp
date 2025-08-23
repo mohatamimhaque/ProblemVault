@@ -30,14 +30,14 @@ int modmul(int a, int b) { return ((1LL * a % mod) * (b % mod)) % mod; }
 uint modInverse(int n, int p=mod){return power(n, p - 2, p);}
 
 void solve(int t){
-    int n;
+    int n,d,l;
     cin>>n;
-    vector<int>vec(n);
-    cin>>vec[n-1];
+    cin>>l;
     for(int i=0;i<n-1;i++){
-        cin>>vec[i];
+        cin>>d;
+        cout<<d<<' ';
     }
-    cout<<vec<<nl;
+    cout<<l<<nl;
 }
 
 int32_t main(){
