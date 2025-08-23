@@ -13,12 +13,11 @@ template<typename typC,typename typD> ostream &operator<<(ostream &cout,const ve
 template<typename typC> ostream &operator<<(ostream &cout,const vector<typC> &a) { int n=a.size(); if (!n) return cout; cout<<a[0]; for (int i=1; i<n; i++) cout<<' '<<a[i]; return cout; }
 
 void solve(int t){
-    int n,m;
+    int n,m,i=0,res=0;
     cin>>n>>m;
     vector<int>vec(n);
     cin>>vec;
     sort(vec.begin(),vec.end());
-    int i=0,res=0;
     while(i<m && vec[i]<0){
         res+=abs(vec[i]);
         i++;
