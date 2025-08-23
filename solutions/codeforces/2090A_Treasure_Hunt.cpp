@@ -32,25 +32,11 @@ uint modInverse(int n, int p=mod){return power(n, p - 2, p);}
 void solve(){
     int x,y,n;
     cin>>x>>y>>n;
-    double m = n%(x+y)+0.5;
-
-    bool tmp = true;
-    while(true){
-        if(tmp){
-            m-=x;
-            tmp = false;
-            if(m<=0){
-                no;
-                return;
-            }
-        }else{
-            m-=y;
-            tmp = true;
-            if(m<=0){
-                yes;
-                return;
-            }
-        }
+    //
+    if(n%(x+y)<x){
+        no;
+    }else{
+        yes;
     }
 
 }
