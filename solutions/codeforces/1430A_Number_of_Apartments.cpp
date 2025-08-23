@@ -91,19 +91,15 @@ uint modInverse(int n, int p=mod){
 void solve(){
     int n,m=0;
     cin>>n;
-    for(int z=0;z*7<=n;z++){
-        for(int y=0;y*5<=n;y++){
-            for(int x=0;x*3<=n;x++){
-                if(3*x+5*y+7*z==n){
-                    cout<<x<<' '<<y<<' '<<z<<nl;
-                    return;
-                    
-                }
-                m++;
-            }
-        }
+    if(n==1 || n==2 or n==4){
+        cout<<-1<<nl;
+    }else if(n%3==0){
+        cout<<n/3<<' '<<0<<' '<<0<<nl;
+    }else if(n%3==1){
+        cout<<(n-7)/3<<' '<<0<<' '<<1<<nl;
+    }else{
+        cout<<(n-5)/3<<' '<<1<<' '<<0<<nl;
     }
-    cout<<-1<<nl;
 }
 
 int32_t main(){
