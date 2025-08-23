@@ -19,7 +19,7 @@ void solve() {
     string s1,s2;
     cin>>m>>n>>s1>>s2;
     if(m>n+1){
-        cout<<"NO\n";
+        no;
         return;
     }
     while(j<m){
@@ -31,25 +31,25 @@ void solve() {
     }
     if(i==-1){
         if(s1==s2){
-            cout<<"YES\n";
+            yes;
         }else{
-            cout<<"NO\n";
+            no;
         }
         return;
     }
     for(j=0;j<i;j++){
         if(s1[j] != s2[j]){
-            cout<<"NO\n";
+            no;
             return;
         }
     }
     for(j=n-1,k=m-1;j>i,k>i;j--,k--){
         if(s1[k] != s2[j]){
-            cout<<"NO\n";
+            no;
             return;
         }
     }
-    cout<<"YES\n";
+    yes;
     return;
 }
 
@@ -57,7 +57,7 @@ int main() {
     init_code();
     
     int t = 1;
-  // cin >> t;
+   //cin >> t;
     
     while (t--) {
         solve();
