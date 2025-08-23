@@ -83,7 +83,7 @@ for i, (pid, data) in enumerate(sorted_subs, 1):
     submitted_time_str = submitted_time.strftime("%b/%d/%Y %H:%MUTC+6")
 
     readme += f"| {i} | {platform} | {problem_link} | {sub_link} | {data['tags']} | {data['language']} | {submitted_time_str} | {data['time_ms']} | {data['memory_kb']} |\n"
-
+    i = i+1
 
 
 
