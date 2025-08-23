@@ -36,18 +36,15 @@ void solve(){
         cout<<-1<<nl;
         return;
     }
+    vector<int>vec;
     for(int i=1;i<=n*n;i+=2){
-        cout<<i;
-        if(tmp==n){
-            cout<<'\n';
-            tmp=1;
-        }else{
-            cout<<' ';
-            tmp++;
-        }
+        vec.push_back(i);
     }
     for(int i=2;i<=n*n;i+=2){
-        cout<<i;
+        vec.push_back(i);
+    }
+    for(int i=0;i<n*n;i++){
+        cout<<vec[i];
         if(tmp==n){
             cout<<'\n';
             tmp=1;
@@ -56,7 +53,6 @@ void solve(){
             tmp++;
         }
     }
-    
 
 
 
