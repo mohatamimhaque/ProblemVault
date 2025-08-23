@@ -14,12 +14,13 @@ void init_code() {
     #endif
 }
 
-string solve() {
+void solve() {
     int m,n,i=-1,j=0,k;
     string s1,s2;
     cin>>m>>n>>s1>>s2;
     if(m>n+1){
-        return "NO";
+        cout<<"NO\n";
+        return;
     }
     while(j<m){
         if(s1[j]=='*'){
@@ -30,22 +31,26 @@ string solve() {
     }
     if(i==-1){
         if(s1==s2){
-            return "YES";
+            cout<<"YES\n";
         }else{
-            return "NO";
+            cout<<"NO\n";
         }
+        return;
     }
     for(j=0;j<i;j++){
         if(s1[j] != s2[j]){
-            return "NO";
+            cout<<"NO\n";
+            return;
         }
     }
     for(j=n-1,k=m-1;j>i,k>i;j--,k--){
         if(s1[k] != s2[j]){
-            return "NO";
+            cout<<"NO\n";
+            return;
         }
     }
-    return "YES";
+    cout<<"YES\n";
+    return;
 }
 
 int main() {
@@ -55,7 +60,7 @@ int main() {
   // cin >> t;
     
     while (t--) {
-        cout<<solve()<<endl;
+        solve();
     }
 
     return 0;
