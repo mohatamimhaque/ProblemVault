@@ -1,23 +1,25 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define ll long long
+#define fast_io ios_base::sync_with_stdio(false);cin.tie(NULL)
 using namespace std;
+ 
+void init_code(){
+    fast_io;
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif 
+}
 
-int main() {
-    string st,vowels="ayouie",dis="";
-    cin >> st;
-    for(char ch : st){
-        ch = tolower(ch);
-        bool is=false;
-        for(char d : vowels){
-            if(ch==d){
-                is=true;
-                break;
-            }
+int main(){
+    //init_code();
+   string str,vowel="aeiouy",up="";
+   cin>>str;
+   transform(str.begin(),str.end(),str.begin(),::tolower);
+   for(auto ch:str){
+        if(vowel.find(ch) == string::npos) {
+            up=up+"."+ch;
         }
-        if(is==false){
-            dis+=".";
-            dis+=ch;
-        }
-    }
-   cout<<dis<<"\n";
-    return 0;
+   }
+   cout<<up<<endl;
 }
