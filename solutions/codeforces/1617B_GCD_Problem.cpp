@@ -21,6 +21,7 @@
 #define mne(v)  *min_element(v.begin(),v.end())     // find min element in vector
 #define unq(v)  v.resize(distance(v.begin(), unique(v.begin(), v.end())));
 using namespace std;
+mt19937 rng((int)std::chrono::steady_clock::now().time_since_epoch().count());
 
 
 void modadd(int &a , int b) {a=((a%mod)+(b%mod))%mod;}
@@ -89,18 +90,15 @@ uint modInverse(int n, int p=mod){
 
 
 void solve(){
-    int n;
-    cin>>n;
-    n--;
-    if(n&1){
-        cout<<n/2<<' '<<n/2+1<<' '<<1<<nl;
-        return;
-    }
-    int x=n/2;
-    if(x&1){
-        cout<<x-2<<' '<<x+2<<' '<<1<<nl;
-    }else{
-        cout<<x-1<<' '<<x+1<<' '<<1<<nl;
+    int n; 
+    cin >> n;
+    while(1) {
+        int k = uniform_int_distribution<int>(2, n-2)(rng);
+        int l = n-k-1;
+        if(k != l && k != 1 && l != 1 && gcd(k, l) == 1) {
+            cout << k << ' ' << l << ' ' << 1 << endl;
+            break;
+        }
     }
 }
 
