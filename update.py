@@ -39,7 +39,6 @@ submissions = {}
 
 # Build dictionary
 for sub in res["result"]:
-    print(sub)
     pid = sub["id"]
     contest_id = sub.get("contestId", 0)
     submissions[pid] = {
