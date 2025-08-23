@@ -107,7 +107,7 @@ void solve(){
             tempA/=tempB;
             temp++;
         }
-        if(temp<ans) ans=temp;
+        ans=min(ans,temp);
     }
     cout<<ans<<nl;
 }
