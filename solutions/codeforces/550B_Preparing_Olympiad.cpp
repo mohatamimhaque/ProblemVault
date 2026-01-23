@@ -66,4 +66,3 @@ int32_t main(){
 }
 
 // Usage: Type "cptemplate" and press TAB (or your snippet expand key).
-// eta ami kalk ratei solve koreci
