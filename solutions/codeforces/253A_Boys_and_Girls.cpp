@@ -42,6 +42,8 @@ void solve(int t) {
     while(i<n){cout<<'B';i++;}
     while(j<m){cout<<'G';j++;}
     cout<<nl;
+
+
 }
 
 
