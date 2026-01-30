@@ -4,7 +4,6 @@
 #define ps(b) cout << ((b) ? "YES\n" : "NO\n")
 #define mod 1000000007
 #define uint unsigned long long
-#define int long long int
 
 using namespace std;
 
@@ -30,26 +29,27 @@ int modmul(int a, int b) { return ((1LL * a % mod) * (b % mod)) % mod; }
 uint modInverse(int n, int p = mod) { return power(n, p - 2, p); }
 
 
-
 void solve(int t) {
     int n;
     cin >> n;
-
+ 
     vector<int> vec(n);
     for(int i = 0; i < n; i++) cin >> vec[i];
-
+ 
     if(n < 3){
         cout << -1 << nl;
         return;
     }
     
     sort(vec.begin(), vec.end());
-
+ 
     long long sum = accumulate(vec.begin(), vec.end(), 0LL);
     long long k = vec[n/2];
-
+ 
     cout << max(0LL, 2LL * n * k - sum + 1) << nl;
 }
+
+
 
 int32_t main(){
     fast_io;
